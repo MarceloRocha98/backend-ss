@@ -27,5 +27,5 @@ consign()
     .into(app)  // injeta app(express) nas paginas citadas, que vai utiliza-lo como parâmetro
 
 app.listen(8080, () => {
-    console.log('backend executando')
+    // console.log('backend executando')
 })
