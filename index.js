@@ -26,6 +26,6 @@ consign()
     .then('./config/routes.js')
     .into(app)  // injeta app(express) nas paginas citadas, que vai utiliza-lo como parâmetro
 
-app.listen(process.env.PORT || 8080, () => {
+app.listen(8080, () => {
     console.log('backend executando')
 })
