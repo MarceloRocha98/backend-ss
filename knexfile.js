@@ -5,7 +5,8 @@ module.exports = {
 
     client: 'postgresql',
     connection: {
-      database: 'services',
+      // database: 'services',
+      database: 'postgresql-concentric-16801',
       user:     'postgres',
       password: '123456'
     },
