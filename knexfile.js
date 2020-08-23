@@ -6,7 +6,9 @@ module.exports = {
     client: 'postgresql',
     connection: {
       // database: 'services',
-      database: 'postgresql-concentric-16801',
+      host: 'ec2-3-214-4-151.compute-1.amazonaws.com',
+      
+      database: process.env.DATABASE_NAME ||'services',
       user:     'postgres',
       password: '123456'
     },
