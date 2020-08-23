@@ -8,7 +8,7 @@ module.exports = {
       // database: 'services',
       host: 'ec2-3-214-4-151.compute-1.amazonaws.com',
       
-      database: 'postgresql-concentric-16801',
+      database: 'd8mt6vvlii53qf',
       // user:     'postgres',
       user:     'myrmyhvvzoarxp',
       password: '679f7e9b08a73a67eb5ef1d9859b03e67728965c09f83792a48481bcf3fa46f5'
