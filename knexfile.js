@@ -9,8 +9,10 @@ module.exports = {
       host: 'ec2-3-214-4-151.compute-1.amazonaws.com',
       
       database: process.env.DATABASE_NAME ||'services',
-      user:     'postgres',
-      password: '123456'
+      // user:     'postgres',
+      user:     'myrmyhvvzoarxp',
+      password: '679f7e9b08a73a67eb5ef1d9859b03e67728965c09f83792a48481bcf3fa46f5'
+      // password: '123456'
     },
     pool: {
       min: 2,
