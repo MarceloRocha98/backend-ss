@@ -1,6 +1,9 @@
+const dotenv = require('dotenv')
 const app = require('express')()
 const consign = require('consign')
 const db = require('./config/db')
+
+dotenv.config();
 
 const fileUpload = require('express-fileupload');
 app.use(fileUpload());
@@ -26,6 +29,7 @@ consign()
     .then('./config/routes.js')
     .into(app)  // injeta app(express) nas paginas citadas, que vai utiliza-lo como parâmetro
 
-app.listen(8080, () => {
-    // console.log('backend executando')
+    // console.log(process.env.DATABASE_URL)
+app.listen(process.env.PORT || 8080, () => {
+    console.log('backend executando')
 })
