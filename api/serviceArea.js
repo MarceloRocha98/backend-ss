@@ -104,12 +104,29 @@ module.exports = app => {
         const finish1=req.query.finish1
         const finish2 = req.query.finish2
         
+        let date = new Date() 
+        let dia = date.getDate()
+        let mes = date.getMonth()
+        let ano=date.getFullYear()
+        // console.log(`${dia}/${mes+1}/${ano}`)
+        let dateNow = `${dia}/${mes + 1}/${ano}`
+        
+       
+        let hours = date.getHours()
+        let minutes = date.getMinutes()
+        let seconds=date.getSeconds()
+        // console.log(`${hours}:${minutes}:${seconds}`)
+        let hour = `${hours}:${minutes}:${seconds}`
+    
+        // console.log(`${dateNow}, ${hour}`)
+        const dateFinish = `${dateNow}, ${hour}`
+        
         if (finish1 || finish2) {
             
             if (finish1) {
                 await app.db('serviceArea')
                     .where({ serviceId })
-                    .update({ finish1 })
+                    .update({ finish1,dateFinish1:dateFinish })
                     .then(_ => res.status(204).send())
                     .catch(err=>res.status(500).send(err))
     
@@ -118,7 +135,7 @@ module.exports = app => {
             if (finish2) {
                 await app.db('serviceArea')
                     .where({ serviceId })
-                    .update({ finish2 })
+                    .update({ finish2,dateFinish2:dateFinish })
                     .then(_ => res.status(204).send())
                     .catch(err=>res.status(500).send())
             }
