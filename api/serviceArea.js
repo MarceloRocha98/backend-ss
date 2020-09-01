@@ -18,6 +18,22 @@ module.exports = app => {
         const chekingLocal = req.params.chekingLocal
         const chekingLocal2 = req.query.chekingLocal2
  
+        let date = new Date() 
+        let dia = date.getDate()
+        let mes = date.getMonth()
+        let ano=date.getFullYear()
+        // console.log(`${dia}/${mes+1}/${ano}`)
+        let dateNow = `${dia}/${mes + 1}/${ano}`
+        
+       
+        let hours = date.getHours()
+        let minutes = date.getMinutes()
+        let seconds=date.getSeconds()
+        // console.log(`${hours}:${minutes}:${seconds}`)
+        let hour = `${hours}:${minutes}:${seconds}`
+    
+        // console.log(`${dateNow}, ${hour}`)
+        const dateCheking=`${dateNow}, ${hour}`
 
         if (userId1 && chekingLocal) {
             
@@ -26,7 +42,8 @@ module.exports = app => {
                     userId1,
                 })
                 .update({
-                    chekingLocal1:chekingLocal,
+                    chekingLocal1: chekingLocal,
+                    dateCheking1:dateCheking,
                 })
                 .then(_=>res.status(204).send())
                 .catch(err => res.status(500))
@@ -39,7 +56,8 @@ module.exports = app => {
                 userId1,
             })
             .update({
-                chekingLocal2:chekingLocal2,
+                chekingLocal2: chekingLocal2,
+                dateCheking2:dateCheking,
             })
             .then(_=>res.status(204).send())
             .catch(err => res.status(500))
