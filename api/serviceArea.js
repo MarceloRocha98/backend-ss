@@ -17,6 +17,7 @@ module.exports = app => {
         const userId1=  req.params.id //qm ta realizando o serviço
         const chekingLocal = req.params.chekingLocal
         const chekingLocal2 = req.query.chekingLocal2
+        const serviceId= req.query.serviceId
  
         let date = new Date() 
         let dia = date.getDate()
@@ -40,6 +41,7 @@ module.exports = app => {
            await app.db('serviceArea')
                 .where({
                     userId1,
+                    serviceId
                 })
                 .update({
                     chekingLocal1: chekingLocal,
@@ -54,6 +56,7 @@ module.exports = app => {
             await app.db('serviceArea')
             .where({
                 userId1,
+                serviceId
             })
             .update({
                 chekingLocal2: chekingLocal2,
