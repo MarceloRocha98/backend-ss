@@ -82,7 +82,7 @@ module.exports = app => {
         .post(app.api.payment.save)
       
     
-    app.route('/profile')
+    app.route('/profile/:id')
         .all(app.config.passport.authenticate())
         .post(app.api.profile.save)
 
