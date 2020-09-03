@@ -26,6 +26,7 @@ consign()
     .then('./api/services.js')
     .then('./api/user.js')
     .then('./api/validation.js')
+    .then('./api/profile.js')
     .then('./config/routes.js')
     .into(app)  // injeta app(express) nas paginas citadas, que vai utiliza-lo como parâmetro
 
