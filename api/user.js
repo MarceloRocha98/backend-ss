@@ -125,7 +125,7 @@ module.exports = app => {
                     return res.stats(400).send({err:'Usuário não existe'})
                 }
                 
-                const token = crypto.randomBytes(20).toString('hex')
+                const token = crypto.randomBytes(7).toString('hex') // tava 20
                 
                 const now = new Date()
                 now.setHours(now.getHours() + 1)
