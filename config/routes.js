@@ -3,6 +3,16 @@ module.exports = app => {
     app.post('/signin', app.api.auth.signin)
     app.post('/validateToken', app.api.auth.validateToken)
 
+    app.post('/forgotPassword', app.api.user.tokenResetPassword)
+    app.get('/forgotPassword/:email', app.api.user.getTokenReset)
+    app.put('/forgotPassword/:id',app.api.user.saveNewPassword)
+
+  
+    app.route('/profile/:id')
+        .all(app.config.passport.authenticate())
+        .post(app.api.profile.save)
+        .get(app.api.profile.get)
+        .put(app.api.profile.update)
 
     app.route('/upload/:id')
         .all(app.config.passport.authenticate())
@@ -81,9 +91,6 @@ module.exports = app => {
         .all(app.config.passport.authenticate())
         .post(app.api.payment.save)
       
-    
-    app.route('/profile/:id')
-        .all(app.config.passport.authenticate())
-        .post(app.api.profile.save)
+  
 
 }

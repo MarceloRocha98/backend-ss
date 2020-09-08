@@ -1,5 +1,7 @@
 const bcrypt = require('bcrypt-nodejs') 
 const textEncoding = require('text-encoding')
+const crypto= require('crypto')
+
 module.exports = app => {
     const { existsOrError, notExistsOrError, equalsOrError, containsNumber } = app.api.validation
     
@@ -111,5 +113,91 @@ module.exports = app => {
             .catch(err=>res.status(500).send(err))
     }
 
-    return {save,get,getById,updateProfile,getImg}
+    const tokenResetPassword = async(req, res) => {
+        // console.log('entrou')
+        const { email } = req.body
+        try {
+            const user =await app.db('users')
+                .select('name')
+                .where({ email })
+                .first()
+                if (!user) {
+                    return res.stats(400).send({err:'Usuário não existe'})
+                }
+                
+                const token = crypto.randomBytes(20).toString('hex')
+                
+                const now = new Date()
+                now.setHours(now.getHours() + 1)
+                // console.log(now)
+            
+
+            // console.log(token, now)
+            await app.db('users')
+                .where({ email })
+                .update({tokenForgot:token,tokenForgotExp:now})
+                .then(_=>res.json([token,now]))
+            
+        } catch (err) {
+            res.status(400).send({err:'Erro, tente novamente'})
+        }
+    }
+
+    const getTokenReset = async (req, res) => {
+        const email = req.params.email
+        
+        const exp=await app.db('users')
+            .select('tokenForgotExp')
+            .where({ email })
+        
+        const now=new Date()
+        if (now > exp) {
+            return res.status(400).send({err:'token expirado'})
+        } else {
+            await app.db('users')
+                .select('tokenForgot')
+                .where({ email })
+                .then(token => res.json({ token }))
+                .catch(err=>res.status(500).send(err))
+        }
+    }
+
+    const saveNewPassword = async(req, res) => {
+     
+            let user = { ...req.body } // faz uma copia do corpo da requisição
+            if (req.params.id) user.id = req.params.id
+            
+            try {
+               
+                existsOrError(user.password, 'Senha não informado')
+                // existsOrError(user.location, 'Localização não informada')
+                existsOrError(user.confirmPassword, 'Confirmação de senha errada')
+                equalsOrError(user.password, user.confirmPassword, 'Senhas não conferem')
+                
+                // const userFromDB = await app.db('users') // acessa a tabela users pra ver se o email passado confere com o de algum usuario
+                //     .where({ email: user.id }).first()
+                // if (!user.id) {
+                //     notExistsOrError(userFromDB,'Usuario ja cadastrado')
+                // }
+            } catch (msg) {
+                
+                    return res.status(400).send(msg)
+            }
+    
+            user.password = encryptPassword(user.password)
+            delete user.confirmPassword
+    
+        // console.log(user)
+            
+                await app.db('users')
+                .where({ email: user.id })
+                .update({password:user.password})
+                    .then(_ => res.status(204).send())
+                    .catch(err=>res.status(500).send(err))
+      
+                
+        
+    }
+
+    return {save,get,getById,updateProfile,getImg,tokenResetPassword,getTokenReset,saveNewPassword}
 }

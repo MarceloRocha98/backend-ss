@@ -8,6 +8,7 @@ module.exports = app => {
         if (!req.params.id) {
             
             try {
+                existsOrError(service.location,'Localização não informada')
                 existsOrError(service.name,'Nome não informado')
                 existsOrError(service.description,'Descrição não informada')
                 existsOrError(service.content,'Conteúdo não informado')
@@ -84,7 +85,7 @@ module.exports = app => {
             
             if (!condit2) { // pra arrumar problema em myservices
                 app.db('services') 
-                .select('id', 'name', 'description','content','userId','price','status','userInProgress','price')
+                .select('id', 'name', 'description','content','userId','price','status','userInProgress','price','location')
                 .whereNot({
                     userId:userId,
                 })
@@ -93,7 +94,7 @@ module.exports = app => {
                 .catch(err => res.status(500).send(err))
             } else {
                 app.db('services') 
-                .select('id', 'name', 'description','content','userId','price','status','userInProgress','price')
+                .select('id', 'name', 'description','content','userId','price','status','userInProgress','price','location')
                 .limit(limit).offset(page * limit - limit)
                 .then(services => res.json({ data: services, count, limit }))
                 .catch(err => res.status(500).send(err))
@@ -101,7 +102,7 @@ module.exports = app => {
         }
         if (condit) {
             app.db('services') 
-            .select('id', 'name', 'description','content','userId','price','status','userInProgress','price')
+            .select('id', 'name', 'description','content','userId','price','status','userInProgress','price','location')
         //    .limit(limit).offset(page * limit - limit)
             .then(services => res.json({ data: services, count, limit }))
             .catch(err => res.status(500).send(err))
@@ -119,7 +120,7 @@ module.exports = app => {
     
                  
             app.db('services') 
-            .select('id', 'name', 'description', 'content','price','status','price','userId')
+            .select('id', 'name', 'description', 'content','price','status','price','userId','location')
             .limit(limit2).offset(page*limit2-limit2)
             .where({ userId: req.params.id })
             // .first()
