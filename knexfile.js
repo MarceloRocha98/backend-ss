@@ -15,10 +15,10 @@ module.exports = {
       // password: '123456'
 
 
-      host: 'ec2-3-214-4-151.compute-1.amazonaws.com',
-      database: 'd8mt6vvlii53qf',
-      user:     'myrmyhvvzoarxp',
-      password: '679f7e9b08a73a67eb5ef1d9859b03e67728965c09f83792a48481bcf3fa46f5'
+      host: 'ec2-54-161-58-21.compute-1.amazonaws.com',
+      database: 'dbqd7lnd3p350c',
+      user:     'qztawannojrhja',
+      password: '61fa141ccee2ea7ab26927b7fbc95cfe825f2f013014c6efdac191cb81bb7765'
     },
     pool: {
       min: 2,
